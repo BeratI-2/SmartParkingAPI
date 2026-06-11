@@ -54,9 +54,9 @@ namespace SmartParkingAPI.Controllers
                 };
 
                 _context.Perdoruesit.Add(newUser);
-                _context.SaveChanges(); // Nëse Supabase nuk i ka kolonat e reja, këtu ndodh Crash!
+                _context.SaveChanges(); 
 
-                // Kalojmë dërgimin e emailit në sfond që të mos presim
+                
                 _ = Task.Run(() => DergoEmailReal(newUser.Email, newUser.Emri, kodiRastesor));
 
                 return Ok(new
@@ -67,7 +67,7 @@ namespace SmartParkingAPI.Controllers
             }
             catch (Exception)
             {
-                // Nëse ndodh Crash, serveri ta tregon errorin, nuk rri duke u menduar
+                
                 return StatusCode(500, new { mesazhi = "GABIM NË DATABAZË: Sigurohuni që keni shtuar kolonat 'Verifikuar' dhe 'KodVerifikimi' në Supabase!" });
             }
         }
@@ -126,7 +126,7 @@ namespace SmartParkingAPI.Controllers
                     {
                         smtp.Credentials = new NetworkCredential(emailDergues, appPassword);
                         smtp.EnableSsl = true;
-                        smtp.Timeout = 10000; // Mbrojtja sekrete: S'lejon të ngrijë
+                        smtp.Timeout = 10000; 
                         smtp.Send(mail);
                     }
                 }
